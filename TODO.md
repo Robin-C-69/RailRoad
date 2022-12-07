@@ -3,7 +3,6 @@
 1. An API using Node.js and Express.js
 2. Allow user to access infos about train, stations and other data
 3. User can buy ticket
-4. ? employee can verifiy the validity of a ticket
 
 ## Features
 ## <ins>Users :</ins>
@@ -23,13 +22,13 @@ const userSchema = new mongoose.Schema({
 ```
 
 * Methods :
->Create (createUser)
+> Create (createUser)
 >
->Read (getUser/getUserById)
+> Read (getUser/getUserById)
 >
->Update (updateUser)
+> Update (updateUser)
 >
->Delete (deleteUser)
+> Delete (deleteUser)
 
 * Roles :
 > No role : Can only create user
@@ -135,17 +134,6 @@ const trainstationSchema = new mongoose.Schema({
 package.json
 README.md
 ```
-
-
-
-
-
-
-
-
-
-
-
 
 # Ideas:
 * Schema User :
