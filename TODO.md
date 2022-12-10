@@ -130,6 +130,7 @@ const trainstationSchema = new mongoose.Schema({
         ...
     |- index.js
 /tests
+node_modules
 .env
 package.json
 README.md
