@@ -191,3 +191,9 @@ if (image.size > MAX_SIZE){
 }
 upload(Image)
 ```
+
+* Compte-rendu
+    - Fichier "READ.ME" qui envoie sur le github avec le vrai READ.ME
+
+* Postman
+    - Add collection folder to github
