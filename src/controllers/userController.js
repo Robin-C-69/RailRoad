@@ -11,7 +11,7 @@ const getAllUsers = (req, res) => {
     })
 }
 
-// Get one user by id
+// Get one user by id //TODO Implement test for match _id model
 const getUserById = (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if (err) {
