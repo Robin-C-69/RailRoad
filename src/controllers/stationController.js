@@ -16,17 +16,21 @@ const getAllStations = (req, res) => {
     })
 }
 
-// Get one station by the id  //TODO Implement test for match _id model
+// Get one station by the id
 const getStationById = (req, res) => {
-    Station.findById(req.params.id, (err, station) => {
-        if (err) {
-            res.status(500).send(err)
-        } else if (!station) {
-            res.status(404).send('Gare non trouvée')
-        } else {
-            res.status(200).json(station)            
-        }
-    })
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+        Station.findById(req.params.id, (err, station) => {
+            if (err) {
+                res.status(500).send(err)
+            } else if (!station) {
+                res.status(404).send('Gare non trouvée')
+            } else {
+                res.status(200).json(station)            
+            }
+        })
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
 }
 
 // CHeck if the time is good formating
