@@ -16,7 +16,7 @@ const getAllTrains = (req, res) => {
 
 // Get one train by the id
 const getTrainById = (req, res) => {
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {  // Check if the _id is good formated
         Train.findById(req.params.id, (err, train) => {
             if (err) {
                 res.status(500).send(err)
@@ -31,27 +31,52 @@ const getTrainById = (req, res) => {
     }
 }
 
-// Create new train  //TODO
-function checkStation(station) {
-    return true
+// Check if a station exists 
+// Usefull to check if the start of end of a train exists
+//TODO
+function checkLocation(stationWanted) {
+    // Don't work
     const allStations = Station.find({}, (err, station) => {
         if (err) {
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).json(station)
+            return err
+        } else {
+            console.log("station = " + station)
+            return station
         }
     })
+    //var allStations =
+    //    [{
+    //      _id: "63bb2b485392d9ced5e6e9fb",
+    //      name: 'Lyon',
+    //      open_hour: '08:00',
+    //      close_hour: '20:00'
+    //    },
+    //    {
+    //        _id: "63bb2b485392d9ced5e6e9it",
+    //        name: 'Paris',
+    //        open_hour: '08:00',
+    //        close_hour: '20:00'
+    //    }]
+
+    // Works from here
+    console.log('allStations = ' + JSON.stringify(allStations))
+    for (const key in allStations) {
+        if (allStations[key]["name"] === stationWanted) {
+            return true            
+        }
+    }
+    return false
 }
 
+// Create new train
 const createTrain = (req, res) => {
     const newTrain = new Train(req.body);
-    if (checkStation(req.body.start_station) && checkStation(req.body.end_station)){
+    if (checkLocation(req.body.start_station) && checkLocation(req.body.end_station)){
         newTrain.save((err, train) => {
             if (err) {
                 res.status(500).send(err)
             } else {
-                res.status(201).json(train)
+                res.status(200).json(train)
             }
         })
     }
@@ -59,28 +84,36 @@ const createTrain = (req, res) => {
 
 // Update Train
 const updateTrain = (req, res) => {
-    Train.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, train) => {
-        if (err) {
-            res.status(500).send(err)
-        } else if (!train) {
-            res.status(404).send('Train non trouvé');
-        } else {
-            res.status(200).json(train);
-        }
-    })
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
+        Train.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, train) => {
+            if (err) {
+                res.status(500).send(err)
+            } else if (!train) {
+                res.status(404).send('Train non trouvé');
+            } else {
+                res.status(200).json(train);
+            }
+        })
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
 }
 
-// Delete train
+// Delete train by the id
 const deleteTrain = (req, res) => {
-    Train.findByIdAndRemove(req.params.id, (err, train) => {
-        if (err) {
-            res.status(500).send(err)
-        } else if (!train) {
-            res.status(404).send('Train non trouvé');
-        } else {
-            res.status(200).json(train);
-        }
-    })
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
+        Train.findByIdAndRemove(req.params.id, (err, train) => {
+            if (err) {
+                res.status(500).send(err)
+            } else if (!train) {
+                res.status(404).send('Train non trouvé');
+            } else {
+                res.status(200).json(train);
+            }
+        })
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
 }
 
 module.exports = {
