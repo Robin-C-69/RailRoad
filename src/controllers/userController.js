@@ -13,7 +13,8 @@ const getAllUsers = (req, res) => {
 
 // Get one user by id //TODO Implement test for match _id model
 const getUserById = (req, res) => {
-    User.findById(req.params.id, (err, user) => {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+       User.findById(req.params.id, (err, user) => {
         if (err) {
             res.status(500).send(err)
         } else if (!user) {
@@ -21,7 +22,11 @@ const getUserById = (req, res) => {
         } else {
             res.status(200).json(user)
         }
-    })
+    }) 
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
+    
 }
 
 // Create user

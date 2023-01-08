@@ -79,11 +79,39 @@ const createStation = (upload.single('image'), (req, res) => {
     })
 })
 
-// Update station //TODO
-const updateStation = (req, res) => {}
+// Update station //TODO Update trains if name is changed
+const updateStation = (req, res) => {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
+        Station.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, station) => {
+            if (err) {
+                res.status(500).send(err)
+            } else if (!train) {
+                res.status(404).send('Gare non trouvée');
+            } else {
+                res.status(200).json(station);
+            }
+        })
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
+}
 
-// Delete station //TODO
-const deleteStation = (req, res) => {}
+// Delete station //TODO Check
+const deleteStation = (req, res) => {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
+        Station.findByIdAndRemove(req.params.id, (err, station) => {
+            if (err) {
+                res.status(500).send(err)
+            } else if (!train) {
+                res.status(404).send('Gare non trouvée');
+            } else {
+                res.status(200).json(station);
+            }
+        })
+    } else {
+        res.status(400).send('Le champ _id n\'est pas correct')
+    }
+}
 
 module.exports = {
     getAllStations,
