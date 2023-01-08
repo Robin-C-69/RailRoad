@@ -45,25 +45,26 @@ const getStationById = (req, res) => {
 }*/
 
 // Define image storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb){
-        cb(null, '../uploads')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../../uploads')
     },
     filename: function (req, file, cb) {
-        cb(null,file.originalname + '-' + Date.now())
+        cb(null, file.originalname + "-" + Date.now() + path.extname(file.originalname))
     }
 })
 var upload = multer({storage: storage})
 
 // Create new station //TODO
 const createStation = (upload.single('image'), (req, res) => {
+    console.log("IMAGE =", req.file)
     var newStation = {
         name: req.body.name,
         open_hour: req.body.open_hour,
         close_hour: req.body.close_hour,
-        img: {
-            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-            contentType: 'image/png'
+        image: {
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.originalname)),
+            contentType: 'image/jpg'
         }
     }
 

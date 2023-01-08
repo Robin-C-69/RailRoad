@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 
-const stationSchema = new mongoose.Schema({
+var stationSchema = new mongoose.Schema({
     name: String,
     open_hour: String,
     close_hour: String,
@@ -10,4 +10,4 @@ const stationSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Station', stationSchema)
+module.exports = new mongoose.model('Station', stationSchema)
