@@ -8,10 +8,9 @@ const getAllTrains = (req, res) => {
             res.status(500).send(err)
         }
         else{
-            const sliced = station.slice(0,10)
-            res.status(200).json(sliced)
+            res.status(200).json(station)
         }
-    })
+    }).limit(req.body.limit ? req.body.limit : 10)
 }
 
 // Get one train by the id
