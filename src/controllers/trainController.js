@@ -10,6 +10,11 @@ const getAllTrains = (req, res) => {
         else{
             res.status(200).json(station)
         }
+    }).sort({
+        name: req.body.sort_name,
+        start_station: req.body.sort_start,
+        end_station: req.body.sort_end,
+        time_of_departure: req.body.sort_time
     }).limit(req.body.limit ? req.body.limit : 10)
 }
 
