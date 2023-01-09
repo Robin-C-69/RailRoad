@@ -13,7 +13,7 @@ const getAllStations = (req, res) => {
         else{
             res.status(200).json(station)
         }
-    })
+    }).sort({name: req.body.sort_name})
 }
 
 // Get one station by the id
