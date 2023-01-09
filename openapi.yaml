@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: RailRoad - OpenAPI 3.0
+  description: |-
+    With this API, you will be able to find the train you want and book a ticket
+    
+  #license:
+    #name: Apache 2.0
+    #url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+tags:
+  - name: User
+    description: Manage users accounts
+
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get all users
+      description: Find all users that are in the DB
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal error
+    
+    post:
+      tags:
+        - User
+      summary: Create new user
+      description: Add new user to the DB
+      operationId: createUser
+      parameters:
+        - name: name
+          in: query
+          description: User's name
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: User's email
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: User's password
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: query
+          description: User's role
+          schema:
+            type: string
+            default: 'user'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal error
+          
+          
+  /user/{id}: 
+    put:
+      tags:
+        - User
+      summary: Update user
+      description: Update user by his id with fields in the body
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: User's id
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: User's name
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: User's email
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: User's password
+          required: false
+          schema:
+            type: string
+        - name: role
+          in: query
+          description: User's role
+          schema:
+            type: string
+            default: 'user'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal error
+          
+    delete:
+      tags:
+        - User
+      summary: delete user
+      description: Delete user with the specified id
+      operationId: deleteUser
+      parameters:
+        - name: name
+          in: query
+          description: User's name
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: User's email
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: User's password
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: query
+          description: User's role
+          schema:
+            type: string
+            default: 'user'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal error
+      
+    get:
+      tags:
+        - User
+      summary: Get user by id
+      description: get one user by passing his id in param
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: query
+          description: User to find
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: an article
+        email:
+          type: string
+          example: jean@supinfo.com
+        password:
+          type: string
+          example: mypassword
+        role:
+          type: string
+          example: admin
+          
