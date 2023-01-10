@@ -33,17 +33,6 @@ const getStationById = (req, res) => {
     }
 }
 
-// CHeck if the time is good formating
-/*function checkTimeFormating(time) {
-    var [hour, minutes] = time.split(':')
-    let hourCheck = (parseInt(hour) >= 0 && parseInt(hour) <= 23  && hour.length === 2)
-    let minuteCheck = (parseInt(minutes) >= 0 && parseInt(minutes) <= 59 && minutes.length === 2)
-    if (hourCheck && minuteCheck) {
-        return true
-    }
-    return false
-}*/
-
 // Define image storage
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -55,33 +44,45 @@ var storage = multer.diskStorage({
 })
 var upload = multer({storage: storage})
 
-// Create new station //TODO
-const createStation = (upload.single('image'), (req, res) => {
-    console.log("IMAGE =", req.file)
-    var newStation = {
-        name: req.body.name,
-        open_hour: req.body.open_hour,
-        close_hour: req.body.close_hour,
-        image: {
-            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.originalname)),
-            contentType: 'image/jpg'
-        }
-    }
+// Create new station
+/*  The image upload doesn't works  */
+// const createStation = (upload.single('image'), (req, res) => {
+//     console.log("IMAGE =", req.file)
+//     var newStation = {
+//         name: req.body.name,
+//         open_hour: req.body.open_hour,
+//         close_hour: req.body.close_hour,
+//         image: {
+//             data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.originalname)),
+//             contentType: 'image/jpg'
+//         }
+//     }
 
-    Station.create(newStation, (err, station) => {
+//     Station.create(newStation, (err, station) => {
+//         if (err) {
+// 			res.status(500).send(err);
+// 		}
+// 		else {
+// 			// item.save();
+// 			res.status(200).json(station);
+// 		}
+//     })
+// })
+
+const createStation = ((req, res) => {
+    const newStation = new Station(req.body);
+    newStation.save((err, station) => {
         if (err) {
-			res.status(500).send(err);
-		}
-		else {
-			// item.save();
-			res.status(200).json(station);
-		}
+            res.status(500).send(err)
+        } else {
+            res.status(200).json(station)
+        }
     })
 })
 
-// Update station //TODO Update trains if name is changed
+// Update station
 const updateStation = (req, res) => {
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){  // /^[0-9]*/
         Station.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, station) => {
             if (err) {
                 res.status(500).send(err)
@@ -96,7 +97,7 @@ const updateStation = (req, res) => {
     }
 }
 
-// Delete station //TODO Check
+// Delete station
 const deleteStation = (req, res) => {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
         Station.findByIdAndRemove(req.params.id, (err, station) => {
