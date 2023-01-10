@@ -86,7 +86,7 @@ const updateStation = (req, res) => {
         Station.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, station) => {
             if (err) {
                 res.status(500).send(err)
-            } else if (!train) {
+            } else if (!station) {
                 res.status(404).send('Gare non trouvée');
             } else {
                 res.status(200).json(station);
@@ -103,7 +103,7 @@ const deleteStation = (req, res) => {
         Station.findByIdAndRemove(req.params.id, (err, station) => {
             if (err) {
                 res.status(500).send(err)
-            } else if (!train) {
+            } else if (!station) {
                 res.status(404).send('Gare non trouvée');
             } else {
                 res.status(200).json(station);
