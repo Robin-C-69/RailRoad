@@ -13,7 +13,10 @@ const objectUser = {
 
 describe('Router', () => {
     it('GET /user', async () => {
-        await supertest(app).get('/user').expect(200).then((response) => {
+        await supertest(app)
+        .get('/user')
+        .expect(200)
+        .then((response) => {
             assert.equal(typeof(response.body), 'object')
         })
     })

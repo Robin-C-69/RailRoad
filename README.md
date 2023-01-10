@@ -14,11 +14,11 @@ npm install
 
 3. En se plaçant à la racine du répertoire, démarrer le serveur :
 ```bash
-node ./src/index.js
+npm start
 ```
-&emsp;&emsp;ou
+&emsp;&emsp;pour lancer les tests :
 ```bash
-nodemon ./src/index.js
+npm test
 ```
 
 4. Envoyer des requêtes http sur le port d'écoute de l'API. La collection avec les requêtes préparées est dans le fichier [railroadCollection.json](./package-lock.json) et peut être importée sur Postman.
