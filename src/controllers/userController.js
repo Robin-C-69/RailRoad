@@ -11,7 +11,7 @@ const getAllUsers = (req, res) => {
     })
 }
 
-// Get one user by id //TODO Implement test for match _id model
+// Get one user by the id
 const getUserById = (req, res) => {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
        User.findById(req.params.id, (err, user) => {

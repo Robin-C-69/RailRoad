@@ -45,7 +45,7 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage})
 
 // Create new station
-/*  The image upload doesn't works  */
+/*  The image upload doesn't works: req.file is empty  */
 // const createStation = (upload.single('image'), (req, res) => {
 //     console.log("IMAGE =", req.file)
 //     var newStation = {
@@ -69,6 +69,7 @@ var upload = multer({storage: storage})
 //     })
 // })
 
+// Create new station
 const createStation = ((req, res) => {
     const newStation = new Station(req.body);
     newStation.save((err, station) => {

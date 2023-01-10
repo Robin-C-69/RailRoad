@@ -37,7 +37,6 @@ const getTrainById = (req, res) => {
 
 // Check if a station exists 
 // Usefull to check if the start of end of a train exists
-//TODO
 function checkLocation(stationWanted) {
     // Don't work
     const allStations = Station.find({}, (err, station) => {
