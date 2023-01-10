@@ -22,3 +22,5 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log("RailRoad écoute sur le port", port)
 })
+
+module.exports = app;

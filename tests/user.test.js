@@ -11,7 +11,7 @@ const objectUser = {
     "__v": Number
 }
 
-describe('Router', () => {
+describe('User', () => {
     it('GET /user', async () => {
         await supertest(app)
         .get('/user')
