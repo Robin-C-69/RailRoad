@@ -21,7 +21,7 @@ npm start
 npm test
 ```
 
-4. Envoyer des requêtes http sur le port d'écoute de l'API. La collection avec les requêtes préparées est dans le fichier [railroadCollection.json](./package-lock.json) et peut être importée sur Postman.
+4. Envoyer des requêtes http sur le port d'écoute de l'API. La collection avec les requêtes préparées est dans le fichier [RailRoad.postman_collection.json](./RailRoad.postman_collection.json) et peut être importée sur Postman.
 
 ## <ins>Plus d'infos :</ins>
 Plus d'infos sont disponibles dans le fichier [INFOS.md](./INFOS.md) et dans le [swagger](./openapi.yaml)
