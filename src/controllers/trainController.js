@@ -20,18 +20,18 @@ const getAllTrains = (req, res) => {
 
 // Get one train by the id
 const getTrainById = (req, res) => {
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {  // Check if the _id is good formated
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {  // Check if the _id is in the correct format
         Train.findById(req.params.id, (err, train) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!train) {
-                res.status(404).send('Train non trouvée')
+                res.status(404).send('Train not found')
             } else {
                 res.status(200).json(train)            
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 
@@ -43,7 +43,6 @@ function checkLocation(stationWanted) {
         if (err) {
             return err
         } else {
-            console.log("station = " + station)
             return station
         }
     })
@@ -62,7 +61,6 @@ function checkLocation(stationWanted) {
     //    }]
 
     // Works from here
-    console.log('allStations = ' + JSON.stringify(allStations))
     for (const key in allStations) {
         if (allStations[key]["name"] === stationWanted) {
             return true            
@@ -92,13 +90,13 @@ const updateTrain = (req, res) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!train) {
-                res.status(404).send('Train non trouvé');
+                res.status(404).send('Train not found');
             } else {
                 res.status(200).json(train);
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 
@@ -109,13 +107,13 @@ const deleteTrain = (req, res) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!train) {
-                res.status(404).send('Train non trouvé');
+                res.status(404).send('Train not found');
             } else {
                 res.status(200).json(train);
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 

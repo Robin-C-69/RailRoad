@@ -18,18 +18,18 @@ const getAllStations = (req, res) => {
 
 // Get one station by the id
 const getStationById = (req, res) => {
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {  // Check if the _id is in the correct format
         Station.findById(req.params.id, (err, station) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!station) {
-                res.status(404).send('Gare non trouvée')
+                res.status(404).send('Station not found')
             } else {
                 res.status(200).json(station)            
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 
@@ -44,7 +44,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({storage: storage})
 
-// Create new station
+// Create new station with image upload
 /*  The image upload doesn't works: req.file is empty  */
 // const createStation = (upload.single('image'), (req, res) => {
 //     console.log("IMAGE =", req.file)
@@ -83,18 +83,18 @@ const createStation = ((req, res) => {
 
 // Update station
 const updateStation = (req, res) => {
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){  // /^[0-9]*/
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)){
         Station.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, station) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!station) {
-                res.status(404).send('Gare non trouvée');
+                res.status(404).send('Station not found');
             } else {
                 res.status(200).json(station);
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 
@@ -105,13 +105,13 @@ const deleteStation = (req, res) => {
             if (err) {
                 res.status(500).send(err)
             } else if (!station) {
-                res.status(404).send('Gare non trouvée');
+                res.status(404).send('Station not found');
             } else {
                 res.status(200).json(station);
             }
         })
     } else {
-        res.status(400).send('Le champ _id n\'est pas correct')
+        res.status(400).send('_id field is not correct')
     }
 }
 

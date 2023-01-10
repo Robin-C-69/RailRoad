@@ -9,37 +9,47 @@
 * Schema :
 ```js
 const userSchema = new mongoose.Schema({
-    pseudo: String,
-    email: String,
-    password: String,
+    _id: Number,
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
     role: {
         type: String,
         default: 'user'
     }
-})
+},
+{_id: false})
 ```
 
-* Methods :
-> Create (createUser)
+* Methods /user :
+> POST : /sign-up ; /login
 >
-> Read (getAllUsers/getUserById)
+> GET : / ; /{id} ; /myprofile/{id}
 >
-> Update (updateUser)
+> PUT : /{id} ; /update-profile/{id}
 >
-> Delete (deleteUser)
+> DELETE : /{id} ; /delete-profile/{id}
 
 * Roles :
-> No role : Can only create user
+> No role : Can only create new user
 >
-> user : Can only view his infos, update/delete them and check/get a ticket
+> User : Can only view his infos, update/delete them and check/get a ticket
 >
-> employee : (user and) Can only read infos on other users
->
-> admin: (employee and) Can update user BUT can't delete infos from user
+> Admin: Can update user, trains and stations, but can't delete infos from other users (in addition to User rights)
 
 * Details :
-    - jwt token
-    - Can only modify (update, delete) infos about themselves, with authentication
+    - jwt token is used for authentication
 
 ## <ins>Trains :</ins>
 * Schema :
@@ -48,30 +58,30 @@ const trainSchema = new mongoose.Schema({
     name: String,
     start_station: String,
     end_station: String,
-    departure_time: Date
+    departure_time: String
 })
 ```
 
-* Methods :
-> Create (createTrain)
+* Methods /train :
+> POST : /
 >
-> Read (getAllTrains/getTrainById)
+> GET : / ; /{id}
 >
-> Update (updateTrain)
+> PUT : /{id}
 >
-> Delete (deleteTrain)
+> DELETE : /{id}
 
 * Details :
     - Only admin can create, update and delete trains
-    - The result of getAllTrains can be limited and sort
+    - The result of getAllTrains can be limited and sort with body parameters : limit, sort_name, sort_start, sort_end, sort_time
 
 ## <ins>Trainstations :</ins>
 * Schema :
 ```js
 const trainstationSchema = new mongoose.Schema({
     name: String,
-    open_hour: Time,
-    close_hour: Time,
+    open_hour: String,
+    close_hour: String,
     image: {
         data: Buffer,
         contentType: String
@@ -79,61 +89,48 @@ const trainstationSchema = new mongoose.Schema({
 })
 ```
 
-* Methods :
-> Create (createStation)
+* Methods /station :
+> POST : /
 >
-> Read (getAllStations/getStationById)
+> GET : / ; /{id}
 >
-> Update (updateStation)
+> PUT : /{id}
 >
-> Delete (deleteStation)
+> DELETE : /{id}
 
 * Details :
     - Only admin can create, update, delete trainstations
-    - When delete a trainstation, delete all trains where departure and end is here
-    - Image need to be resized to 200*200px if upload is too big
+    - When a trainstation is deleted, all trains where departure and end is here are also deleted
+    - Image is resized to 200px*200px if the size is too big for upload
 
 # Architecture
 ```
 node_modules
 /src
     /controllers
-        |- userController.js
-        |- trainController.js
         |- stationController.js
+        |- trainController.js
+        |- userController.js
     /middlewares
-        |- checkUser.js
+        |- middleware.js
     /models
-        |- User.js
+        |- counter
         |- Station.js
         |- Train.js
+        |- User.js
+        |- UserasUser.js
     /routes
-        |- user.js
         |- station.js
         |- train.js
+        |- user.js
     index.js
 /tests
+    |- user.test.js
 /uploads
 .env
-package.json
+INFOS.md
 openapi.yaml
+package-lock.json
+package.json
 README.md
 ```
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-## <ins>Other things :</ins>
-1. Add endpoint to book a ticket and validate it
-> Buy ticket (buyTicket)
->
-> Validate ticket (validateTicket)
-
-3. Tests

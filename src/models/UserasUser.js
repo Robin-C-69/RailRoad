@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const userSchema = new mongoose.Schema({
+/*const mongoose = require('mongoose')
+const userAsUserSchema = new mongoose.Schema({
     _id: Number,
     username: {
         type: String,
@@ -15,11 +15,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role: {
-        type: String,
-        default: 'user'
-    }
 },
 {_id: false})
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userAsUserSchema)
+
+*/
